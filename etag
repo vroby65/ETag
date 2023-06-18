@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import sys
+import requests
+
+def read_etag(url):
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        etag = response.headers.get('ETag')
+        if etag:
+            print(f"ETag: {etag}")
+        else:
+            print("ETag not present in the server's response")
+    else:
+        print("The request was not successful")
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("syntax: etag <URL> ")
+        sys.exit(1)
+
+    url = sys.argv[1]
+    read_etag(url)
